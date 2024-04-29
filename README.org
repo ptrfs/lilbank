@@ -1,0 +1,3 @@
+#+title: Little Bank
+
+lilbank is a tiny bank management system
