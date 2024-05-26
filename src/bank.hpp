@@ -53,5 +53,4 @@ public:
     this->customer_ids.push_back(customer_id);
     return 0;
   } 
-
 };

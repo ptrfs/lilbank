@@ -38,7 +38,7 @@ public:
 
 class savings_account : account {
 private:
-  int withdraw_limit = 1;
+  int withdraw_limit = 100;
 
 public:
   bool withdraw(int amount) {
@@ -48,5 +48,10 @@ public:
 
     this->balance -= amount;
     return false;
+  }
+
+  // setting withdraw limit
+  void set_withdraw_limit (int amount){
+    this->withdraw_limit = amount;
   }
 };
