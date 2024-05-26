@@ -38,7 +38,7 @@ public:
 
 class savings_account : account {
 private:
-  int withdraw_limit = 100;
+  int withdraw_limit = 1;
 
 public:
   bool withdraw(int amount) {
