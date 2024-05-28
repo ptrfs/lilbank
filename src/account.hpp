@@ -39,6 +39,9 @@ public:
 };
 
 class checking_account : account {
+protected:
+  int balance;
+  
 private:
   // 1 for open, 0 for closed
   int status;
@@ -49,6 +52,10 @@ public:
     this->status = true;
   }
 
+  void close_account() {
+    this->status = false;
+  }
+  
   void deposit (int amount) {
     if (this->status != 1)
       throw "Account not opened!";
@@ -67,9 +74,13 @@ public:
     this->balance -= amount;
     return false;
   }
+
+  ~checking_account(){
+    this->status = false;
+  }
 };
 
-class credit_account : account {
+class credit_account : checking_account {
 private:
   int credit_limit = 100;
 public:
