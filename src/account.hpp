@@ -16,12 +16,12 @@ private:
   std::string name;
   bank bank_member;
   account_class class_type = basic;
-  
+
 protected:
   int balance;
 
 public:
-  account(std::string name, bank& bank)
+  account(std::string name, bank &bank)
       : name(name), bank_member(bank), balance(1) {
     this->id = bank_member.add_customer();
   }
@@ -41,32 +41,28 @@ public:
 class checking_account : account {
 protected:
   int balance;
-  
+
 private:
   // 1 for open, 0 for closed
   int status;
   account_class class_type = checking;
 
 public:
-  void open_account(){
-    this->status = true;
-  }
+  void open_account() { this->status = true; }
 
-  void close_account() {
-    this->status = false;
-  }
-  
-  void deposit (int amount) {
+  void close_account() { this->status = false; }
+
+  void deposit(int amount) {
     if (this->status != 1)
       throw "Account not opened!";
 
     this->balance += amount;
   }
 
-  bool withdraw(int amount){
+  bool withdraw(int amount) {
     if (this->status != 1)
       throw "Account in not opened!";
-    
+
     if (balance < amount) {
       return EXIT_FAILURE;
     }
@@ -75,21 +71,18 @@ public:
     return false;
   }
 
-  ~checking_account(){
-    this->status = false;
-  }
+  ~checking_account() { this->status = false; }
 };
 
 class credit_account : checking_account {
 private:
   int credit_limit = 100;
+
 public:
-  void set_credit_limit (int limit) {
-    this->credit_limit = limit;
-  }
-  
+  void set_credit_limit(int limit) { this->credit_limit = limit; }
+
   bool withdraw(int amount) {
-    if ((balance + credit_limit) < amount){
+    if ((balance + credit_limit) < amount) {
       return EXIT_FAILURE;
     }
 
@@ -114,7 +107,5 @@ public:
   }
 
   // setting withdraw limit
-  void set_withdraw_limit (int amount){
-    this->withdraw_limit = amount;
-  }
+  void set_withdraw_limit(int amount) { this->withdraw_limit = amount; }
 };

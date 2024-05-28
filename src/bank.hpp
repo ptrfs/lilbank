@@ -1,10 +1,10 @@
 #pragma once
 
+#include <algorithm>
 #include <cstdlib>
+#include <random>
 #include <string>
 #include <vector>
-#include <random>
-#include <algorithm>
 
 // Get an id (random integer) in the bounds of `limit`
 static int get_id(int limit) {
@@ -20,17 +20,15 @@ private:
   std::string name;
   int id;
   int interest_rate = 1;
-  
+
   // Identfies, in integer format, the customers in the bank (class)
   std::vector<signed int> customer_ids;
 
 public:
-  bank(std::string name): name(name), id(get_id(300)) {}
+  bank(std::string name) : name(name), id(get_id(300)) {}
 
   // Get the amount of customers in a bank
-  int get_customer_amount() {
-    return this->customer_ids.size();
-  }
+  int get_customer_amount() { return this->customer_ids.size(); }
 
   // Setting and Getting
 
@@ -38,12 +36,11 @@ public:
     this->interest_rate = new_interest_rate;
   }
 
-  std::string get_name() {
-    return this->name;
-  }
+  std::string get_name() { return this->name; }
 
-  bool check_id_exists(int id){
-    auto id_exists = std::find(this->customer_ids.begin(), this->customer_ids.end(), id);
+  bool check_id_exists(int id) {
+    auto id_exists =
+        std::find(this->customer_ids.begin(), this->customer_ids.end(), id);
 
     return (id_exists != this->customer_ids.end());
   }
@@ -54,5 +51,4 @@ public:
     this->customer_ids.push_back(customer_id);
     return 0;
   }
-
 };
