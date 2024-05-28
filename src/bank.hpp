@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdlib>
 #include <string>
 #include <vector>
 #include <random>
@@ -52,5 +53,6 @@ public:
 
     this->customer_ids.push_back(customer_id);
     return 0;
-  } 
+  }
+
 };

@@ -1,18 +1,27 @@
 #include "./bank.hpp"
+#include <cstdlib>
 #include <memory>
 #include <string>
+
+enum account_class {
+  basic,
+  checking,
+  savings,
+  credit,
+};
 
 class account {
 private:
   int id;
   std::string name;
   bank bank_member;
-
+  account_class class_type = basic;
+  
 protected:
   int balance;
 
 public:
-  account(std::string name, bank bank)
+  account(std::string name, bank& bank)
       : name(name), bank_member(bank), balance(1) {
     this->id = bank_member.add_customer();
   }
@@ -29,16 +38,59 @@ public:
   }
 };
 
-class checking_account : account {};
+class checking_account : account {
+private:
+  // 1 for open, 0 for closed
+  int status;
+  account_class class_type = checking;
+
+public:
+  void open_account(){
+    this->status = true;
+  }
+
+  void deposit (int amount) {
+    if (this->status != 1)
+      throw "Account not opened!";
+
+    this->balance += amount;
+  }
+
+  bool withdraw(int amount){
+    if (this->status != 1)
+      throw "Account in not opened!";
+    
+    if (balance < amount) {
+      return EXIT_FAILURE;
+    }
+
+    this->balance -= amount;
+    return false;
+  }
+};
 
 class credit_account : account {
+private:
+  int credit_limit = 100;
 public:
-  void withdraw(int amount) { this->balance -= amount; }
+  void set_credit_limit (int limit) {
+    this->credit_limit = limit;
+  }
+  
+  bool withdraw(int amount) {
+    if ((balance + credit_limit) < amount){
+      return EXIT_FAILURE;
+    }
+
+    this->balance -= amount;
+    return EXIT_SUCCESS;
+  }
 };
 
 class savings_account : account {
 private:
   int withdraw_limit = 1;
+  account_class class_type = savings;
 
 public:
   bool withdraw(int amount) {
