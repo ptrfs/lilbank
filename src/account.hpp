@@ -26,9 +26,9 @@ public:
     this->id = bank_member.add_customer();
   }
 
-  void deposit(int amount) { this->balance += amount; }
+  virtual void deposit(int amount) { this->balance += amount; }
 
-  bool withdraw(int amount) {
+  virtual bool withdraw(int amount) {
     if (balance < amount) {
       return EXIT_FAILURE;
     }
