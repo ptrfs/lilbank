@@ -1,5 +1,9 @@
 #include "bank.hpp"
+#include "account.hpp"
+#include "payment.cpp"
 #include "gtest/gtest.h"
+#include <memory>
+
 
 // Test fixture for bank class
 class BankTest : public ::testing::Test {
@@ -18,6 +22,22 @@ protected:
 
   // Pointer to the bank object
   bank *bank_obj;
+};
+
+// Test fixture for account class
+class AccountTest : public ::testing::Test {
+private:
+  std::unique_ptr<bank> test_bank = std::make_unique<bank>("test bank");
+protected:
+  void SetUp() override {
+    account_obj = new account("Test Account", *test_bank); 
+  }
+
+  void TearDown() override {
+    delete account_obj;
+  }
+  
+  account *account_obj;
 };
 
 // Test the constructor of the bank class
