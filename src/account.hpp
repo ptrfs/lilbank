@@ -30,11 +30,19 @@ public:
 
   virtual bool withdraw(int amount) {
     if (balance < amount) {
-      return EXIT_FAILURE;
+      return false;
     }
 
     this->balance -= amount;
-    return 0;
+    return 1;
+  }
+
+  std::string get_name() {
+    return this->name;
+  }
+
+  int get_balance() {
+    return this->balance;
   }
 };
 

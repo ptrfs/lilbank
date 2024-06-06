@@ -59,6 +59,31 @@ TEST_F(BankTest, AddCustomerTest) {
 }
 
 // Example of more tests can be added here
+TEST_F(AccountTest, ConstructorTest) {
+  // Check if the account class is not null
+  ASSERT_NE(account_obj, nullptr);
+
+  // Check if the account name is true
+  EXPECT_EQ(account_obj->get_name(), "Test Account");
+
+  // Check if the account balance is true
+  EXPECT_EQ(account_obj->get_balance(), 1);
+}
+
+TEST_F(AccountTest, DepositTest) {
+  account_obj->deposit(10);
+  EXPECT_EQ(account_obj->get_balance(), (10 + 1));
+}
+
+TEST_F(AccountTest, WithdrawTest) {
+  std::unique_ptr<bank> b = std::make_unique<bank>("Test Bank");
+  std::unique_ptr<account> a = std::make_unique<account>("Test Account", *b);
+  a->deposit(100);
+  EXPECT_FALSE(a->withdraw(200));
+
+  EXPECT_TRUE(a->withdraw(50));
+  EXPECT_EQ(a->get_balance(), (1 + 100 - 50));
+}
 
 // Entry point for running tests
 int main(int argc, char **argv) {
