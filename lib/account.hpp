@@ -1,3 +1,5 @@
+#pragma once
+
 #include "./bank.hpp"
 #include <cstdlib>
 #include <memory>

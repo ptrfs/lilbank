@@ -1,7 +1,7 @@
 #pragma once
 
-// #include "./account.hpp"
-// #include "./bank.hpp"
+#include "../lib/bank.hpp"
+#include "../lib/account.hpp"
 #include <cstdlib>
 
 bool pay_checking(int id_get, int id_pay, bank &drawee, checking_account &payee,

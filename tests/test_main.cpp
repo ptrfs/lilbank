@@ -1,6 +1,6 @@
 #include "bank.hpp"
 #include "account.hpp"
-#include "payment.cpp"
+#include "../src/payment.cpp"
 #include "gtest/gtest.h"
 #include <memory>
 
