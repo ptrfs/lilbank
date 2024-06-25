@@ -87,9 +87,17 @@ public:
 class credit_account : checking_account {
 private:
   int credit_limit = 100;
+  int cashback_start = 50 / 100;
+  bool cashback = false;
+  account_class class_type = credit;
 
 public:
+
   void set_credit_limit(int limit) { this->credit_limit = limit; }
+
+  void allow_cashback(bool rule) { this->cashback = rule; }
+
+  void set_cashback(float percent_start) {this->cashback_start = percent_start; }
 
   bool withdraw(int amount) {
     if ((balance + credit_limit) < amount) {
@@ -99,6 +107,12 @@ public:
     this->balance -= amount;
     return EXIT_SUCCESS;
   }
+
+  int get_credit_limit () { return this->credit_limit; }
+
+  bool allow_cashback () { return this->cashback; }
+
+  float get_cashback_percent () { return this->cashback_start; }
 };
 
 class savings_account : account {

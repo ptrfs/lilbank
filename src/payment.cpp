@@ -43,3 +43,7 @@ bool pay(int id_get, int id_pay, bank &drawee, account &payee, account &drawer,
 
   return 0;
 }
+
+// bool pay_credit(int id_get, int id_pay, bank &drawee, credit_account &payee, account &drawer, bank &payee_bank, int amount) {
+
+// }
