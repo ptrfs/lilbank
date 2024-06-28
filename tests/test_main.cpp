@@ -1,9 +1,8 @@
-#include "bank.hpp"
-#include "account.hpp"
 #include "../src/payment.cpp"
+#include "account.hpp"
+#include "bank.hpp"
 #include "gtest/gtest.h"
 #include <memory>
-
 
 // Test fixture for bank class
 class BankTest : public ::testing::Test {
@@ -28,15 +27,14 @@ protected:
 class AccountTest : public ::testing::Test {
 private:
   std::unique_ptr<bank> test_bank = std::make_unique<bank>("test bank");
+
 protected:
   void SetUp() override {
-    account_obj = new account("Test Account", *test_bank); 
+    account_obj = new account("Test Account", *test_bank);
   }
 
-  void TearDown() override {
-    delete account_obj;
-  }
-  
+  void TearDown() override { delete account_obj; }
+
   account *account_obj;
 };
 
