@@ -2,7 +2,6 @@
 
 #include "./bank.hpp"
 #include <cstdlib>
-#include <memory>
 #include <string>
 
 enum account_class {
@@ -13,14 +12,12 @@ enum account_class {
 };
 
 class account {
-private:
-  int id;
-  std::string name;
-  bank bank_member;
-  account_class class_type = basic;
-
 protected:
   int balance;
+  int id;
+  std::string name;
+  account_class class_type = basic;
+  bank bank_member;
 
 public:
   account(std::string name, bank &bank)
@@ -39,13 +36,9 @@ public:
     return 1;
   }
 
-  std::string get_name() {
-    return this->name;
-  }
+  std::string get_name() { return this->name; }
 
-  int get_balance() {
-    return this->balance;
-  }
+  int get_balance() { return this->balance; }
 };
 
 class checking_account : account {
@@ -92,12 +85,18 @@ private:
   account_class class_type = credit;
 
 public:
+  credit_account(std::string name, bank &bank)
+      : name(name), bank_member(bank), balance(1) {
+    this->id = bank_member.add_customer();
+  }
 
   void set_credit_limit(int limit) { this->credit_limit = limit; }
 
   void allow_cashback(bool rule) { this->cashback = rule; }
 
-  void set_cashback(float percent_start) {this->cashback_start = percent_start; }
+  void set_cashback(float percent_start) {
+    this->cashback_start = percent_start;
+  }
 
   bool withdraw(int amount) {
     if ((balance + credit_limit) < amount) {
@@ -108,11 +107,11 @@ public:
     return EXIT_SUCCESS;
   }
 
-  int get_credit_limit () { return this->credit_limit; }
+  int get_credit_limit() { return this->credit_limit; }
 
-  bool allow_cashback () { return this->cashback; }
+  bool allow_cashback() { return this->cashback; }
 
-  float get_cashback_percent () { return this->cashback_start; }
+  float get_cashback_percent() { return this->cashback_start; }
 };
 
 class savings_account : account {
