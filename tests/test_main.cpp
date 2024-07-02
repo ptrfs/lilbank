@@ -37,20 +37,6 @@ protected:
   account *account_obj;
 };
 
-class CreditAccountTest : public ::testing::Test {
-private:
-  std::unique_ptr<bank> test_bank = std::make_unique<bank>("Test Bank");
-
-protected:
-  void SetUp() override {
-    credit_account_obj = new credit_account("Test Account", *test_bank);
-  }
-
-  void TearDown() override { delete credit_account_obj; }
-
-  credit_account *credit_account_obj;
-};
-
 // Test the constructor of the bank class
 TEST_F(BankTest, ConstructorTest) {
   // Check if bank object is not null
