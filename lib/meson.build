@@ -1,6 +1,6 @@
 lib_sources = [
   'account.hpp',
-  'bank.hpp'
+  'bank.hpp',
   'toml.hpp'
 ]
 
