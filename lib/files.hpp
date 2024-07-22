@@ -1,9 +1,12 @@
-#include "toml.hpp"
+#pragma once
+
+// #include "toml.hpp"
 #include <filesystem>
 #include <optional>
 #include <iostream>
 #include <fstream>
 #include <ctime>
+
 
 // App startup function to check if there is ~/.local/lilbank/, if not, create it
 bool create_lilbank (std::optional <std::string> custom_dir){
@@ -21,6 +24,7 @@ bool create_lilbank (std::optional <std::string> custom_dir){
   } catch (const std::filesystem::filesystem_error &e) {
     std::cerr << "Filesystem error: " << e.what() << std::endl;
   }
+  return 0;
 }
 
 bool file_exists (std::string name){
