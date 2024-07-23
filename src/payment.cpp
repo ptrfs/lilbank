@@ -27,6 +27,7 @@ bool pay_checking(int id_get, int id_pay, bank &drawee, checking_account &payee,
   return 0;
 }
 
+// Transfer money from one account to another account
 bool pay(int id_get, int id_pay, bank &drawee, account &payee, account &drawer,
          bank &payee_bank, int amount) {
   // Open Account
@@ -43,7 +44,3 @@ bool pay(int id_get, int id_pay, bank &drawee, account &payee, account &drawer,
 
   return 0;
 }
-
-// bool pay_credit(int id_get, int id_pay, bank &drawee, credit_account &payee, account &drawer, bank &payee_bank, int amount) {
-
-// }

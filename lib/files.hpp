@@ -27,6 +27,7 @@ bool create_lilbank (std::optional <std::string> custom_dir){
   return 0;
 }
 
+// Checks if a file exists
 bool file_exists (std::string name){
   std::fstream f(name.c_str());
   return f.good();
