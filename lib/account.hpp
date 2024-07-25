@@ -55,14 +55,14 @@ public:
 
   void close_account() { this->status = false; }
 
-  void deposit(int amount) {
+  virtual void deposit(int amount) {
     if (this->status != 1)
       throw "Account not opened!";
 
     this->balance += amount;
   }
 
-  bool withdraw(int amount) {
+  virtual bool withdraw(int amount) {
     if (this->status != 1)
       throw "Account in not opened!";
 
@@ -94,4 +94,40 @@ public:
 
   // setting withdraw limit
   void set_withdraw_limit(int amount) { this->withdraw_limit = amount; }
+};
+
+class credit_account : account {
+private:
+  unsigned int credit_limit = 10000;
+  account_class class_type = credit;
+
+public:
+  bool withdraw(int amount) {
+    if (balance < amount && credit_limit == 0) {
+      return EXIT_FAILURE;
+    } else if (balance < amount && credit_limit > amount) {
+      amount -= credit_limit;
+      return EXIT_SUCCESS;
+    } else if (balance > amount) {
+      amount -= balance;
+      return EXIT_SUCCESS;
+    } else {
+      return EXIT_FAILURE;
+    }
+  }
+
+  void deposit(int amount) {
+    if (this->credit_limit != 10000) {
+      int deposit_amount = 0;
+
+      if (this->credit_limit + amount > 10000) {
+        deposit_amount += (this->credit_limit + amount);
+        deposit_amount -= 10000;
+        this->balance += deposit_amount;
+        this->credit_limit += (amount - deposit_amount);
+      }
+    }
+
+    this->balance += amount;
+  }
 };

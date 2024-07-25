@@ -1,5 +1,9 @@
 {
   "C_Cpp.default.compileCommands": "/home/nyasha/Documents/Projects/lilbank/builddir/compile_commands.json",
   "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild",
-  "mesonbuild.configureOnOpen": false
+  "mesonbuild.configureOnOpen": false,
+  "files.associations": {
+    "optional": "cpp",
+    "iosfwd": "cpp"
+  }
 }
