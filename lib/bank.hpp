@@ -1,6 +1,10 @@
 #pragma once
 
+#include "files.hpp"
 #include <algorithm>
+#include <filesystem>
+#include <iostream>
+#include <optional>
 #include <random>
 #include <string>
 #include <vector>
@@ -24,7 +28,19 @@ private:
   std::vector<signed int> customer_ids;
 
 public:
-  bank(std::string name) : name(name), id(get_id(300)) {}
+  bank(std::string name) : name(name), id(get_id(300)) {
+    create_lilbank(std::nullopt);
+    std::string base_path = "~/.local/lilbank/" + name;
+
+    try {
+      std::filesystem::create_directory(base_path);
+      std::filesystem::create_directory(base_path + "/saving");
+      std::filesystem::create_directory(base_path + "/debit");
+      std::filesystem::create_directory(base_path + "/credit");
+    } catch (const std::filesystem::filesystem_error &e) {
+      std::cerr << e.what() << std::endl;
+    }
+  }
 
   // Get the amount of customers in a bank
   int get_customer_amount() { return this->customer_ids.size(); }
