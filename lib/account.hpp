@@ -111,9 +111,9 @@ public:
     } else if (balance > amount) {
       amount -= balance;
       return EXIT_SUCCESS;
-    } else {
-      return EXIT_FAILURE;
     }
+
+    return EXIT_FAILURE;
   }
 
   void deposit(int amount) {
@@ -121,7 +121,7 @@ public:
       int deposit_amount = 0;
 
       if (this->credit_limit + amount > 10000) {
-        deposit_amount += (this->credit_limit + amount);
+        deposit_amount = (this->credit_limit + amount);
         deposit_amount -= 10000;
         this->balance += deposit_amount;
         this->credit_limit += (amount - deposit_amount);
