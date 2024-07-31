@@ -60,10 +60,10 @@ public:
     return (id_exists != this->customer_ids.end());
   }
 
-  bool add_customer() {
+  int add_customer() {
     int customer_id = get_id(8000000);
 
     this->customer_ids.push_back(customer_id);
-    return 0;
+    return customer_id;
   }
 };
