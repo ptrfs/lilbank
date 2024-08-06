@@ -1,3 +1,6 @@
 #include <iostream>
+#include "../lib/files.hpp"
 
-int main() { std::cout << "Hello, World!" << std::endl; }
+int main() {
+  return create_day_file("ptr", std::nullopt);
+}

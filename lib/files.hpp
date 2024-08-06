@@ -1,6 +1,5 @@
 #pragma once
 
-// #include "toml.hpp"
 #include <ctime>
 #include <filesystem>
 #include <fstream>
@@ -32,28 +31,34 @@ bool file_exists(std::string name) {
   return f.good();
 }
 
-// Create a bankfile for a specific date
-bool create_bank_file(std::string home_name, std::optional<std::string> custom_dir) {
+// Create a dayfile for a specific date
+bool create_day_file(std::string home_name, std::optional<std::string> custom_dir) {
   std::string dir;
   create_lilbank(home_name, std::nullopt);
 
+  // Making the lilbank file (it would've already been made by this time but whatever)
   if (custom_dir.has_value()) {
     dir = custom_dir.value();
   } else {
-    dir = "~/.local/lilbank/";
+    dir = "/home/" + home_name + "/.local/lilbank/day/";
   }
 
+  // Creaing the dayfolder
+  std::filesystem::create_directory(dir);
+
+  // Initialising time
   time_t now = time(0);
   tm *ltm = localtime(&now);
 
-  std::string dir_name =
+  // Getting the name of the bankfile
+  std::string bankfile =
       dir +
-      (std::string(std::to_string(ltm->tm_mon) + std::to_string(ltm->tm_mday)));
-  if (file_exists(dir_name)) {
+      (std::string(std::to_string(ltm->tm_mday) + "-" + std::to_string(ltm->tm_mon)) + "-" + std::to_string(ltm->tm_year) + ".toml");
+  if (file_exists(bankfile)) {
     return 0;
   }
 
-  std::ofstream temp(dir_name);
+  std::ofstream temp(bankfile);
   temp << "[lilbank]\n";
   return 0;
 }
