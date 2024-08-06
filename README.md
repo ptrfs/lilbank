@@ -5,4 +5,4 @@ Requirements
  - meson
  - gtest
 
-Have fun - ptr
+Have fun -ptr
