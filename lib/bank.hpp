@@ -28,9 +28,9 @@ private:
   std::vector<signed int> customer_ids;
 
 public:
-  bank(std::string name) : name(name), id(get_id(300)) {
-    create_lilbank(std::nullopt);
-    std::string base_path = "~/.local/lilbank/" + name;
+  bank(std::string name, std::string home_dir_name) : name(name), id(get_id(300)) {
+    create_lilbank(home_dir_name, std::nullopt);
+    std::string base_path = "/home/" + home_dir_name + "/.local/lilbank/" + name;
 
     try {
       std::filesystem::create_directory(base_path);
@@ -46,7 +46,6 @@ public:
   int get_customer_amount() { return this->customer_ids.size(); }
 
   // Setting and Getting
-
   void set_interest_rate(int new_interest_rate) {
     this->interest_rate = new_interest_rate;
   }

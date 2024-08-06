@@ -9,7 +9,7 @@ protected:
   // Set up the test fixture
   void SetUp() override {
     // Initialize bank
-    bank_obj = new bank("Test Bank");
+    bank_obj = new bank("Test Bank", "ptr");
   }
 
   // Tear down the test fixture
@@ -25,17 +25,18 @@ protected:
 // Test fixture for account class
 class AccountTest : public ::testing::Test {
 private:
-  std::unique_ptr<bank> test_bank = std::make_unique<bank>("test bank");
+  bank test_bank = bank("test bank", "ptr");
 
 protected:
   void SetUp() override {
-    account_obj = new account("Test Account", *test_bank);
+    account_obj = new account("Test Account", test_bank);
   }
 
   void TearDown() override { delete account_obj; }
 
   account *account_obj;
 };
+
 
 // Test the constructor of the bank class
 TEST_F(BankTest, ConstructorTest) {
@@ -73,8 +74,8 @@ TEST_F(AccountTest, DepositTest) {
 }
 
 TEST_F(AccountTest, WithdrawTest) {
-  std::unique_ptr<bank> b = std::make_unique<bank>("Test Bank");
-  std::unique_ptr<account> a = std::make_unique<account>("Test Account", *b);
+  bank b = bank("TB", "ptr");
+  std::unique_ptr<account> a = std::make_unique<account>("Test Account", b);
   a->deposit(100);
   EXPECT_FALSE(a->withdraw(200));
 

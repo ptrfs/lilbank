@@ -102,7 +102,7 @@ private:
   account_class class_type = credit;
 
 public:
-  bool withdraw(int amount) {
+  bool withdraw(unsigned int amount) {
     if (balance < amount && credit_limit == 0) {
       return EXIT_FAILURE;
     } else if (balance < amount && credit_limit > amount) {

@@ -9,16 +9,14 @@
 
 // App startup function to check if there is ~/.local/lilbank/, if not, create
 // it
-bool create_lilbank(std::optional<std::string> custom_dir) {
+bool create_lilbank(std::string home_name, std::optional<std::string> custom_dir) {
   std::string dir;
 
   if (custom_dir.has_value()) {
     dir = custom_dir.value();
   } else {
-    dir = "~/.local/lilbank/";
+    dir = "/home/" + home_name + "/.local/lilbank/";
   }
-  if (std::filesystem::exists(dir))
-    return 0;
 
   try {
     std::filesystem::create_directory(dir);
@@ -35,9 +33,9 @@ bool file_exists(std::string name) {
 }
 
 // Create a bankfile for a specific date
-bool create_bank_file(std::optional<std::string> custom_dir) {
+bool create_bank_file(std::string home_name, std::optional<std::string> custom_dir) {
   std::string dir;
-  create_lilbank(std::nullopt);
+  create_lilbank(home_name, std::nullopt);
 
   if (custom_dir.has_value()) {
     dir = custom_dir.value();
