@@ -99,7 +99,7 @@ public:
 class credit_account : account {
 private:
   unsigned int credit_limit = 10000;
-  account_class class_type = credit;
+  account_class _class_type = credit;
 
 public:
   bool withdraw(unsigned int amount) {
