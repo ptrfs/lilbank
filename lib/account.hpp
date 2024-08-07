@@ -4,24 +4,16 @@
 #include <cstdlib>
 #include <string>
 
-enum account_class {
-  basic,
-  checking,
-  savings,
-  credit,
-};
-
 class account {
 protected:
   int balance;
   int id;
   std::string name;
-  account_class class_type = basic;
   bank bank_member;
 
 public:
   account(std::string name, bank &bank)
-      : name(name), bank_member(bank), balance(1) {
+      : balance(1), name(name), bank_member(bank) {
     this->id = bank_member.add_customer();
   }
 
@@ -29,40 +21,44 @@ public:
 
   virtual bool withdraw(int amount) {
     if (balance < amount) {
-      return false;
+      return 1;
     }
 
     this->balance -= amount;
-    return 1;
+    return 0;
   }
 
-  std::string get_name() { return this->name; }
+  std::string get_name() const { return this->name; }
 
-  int get_balance() { return this->balance; }
+  int get_balance() const { return this->balance; }
+
+  virtual ~account();
 };
 
-class checking_account : account {
+class checking_account : public account {
 protected:
   int balance;
 
 private:
   // 1 for open, 0 for closed
-  int status;
-  account_class class_type = checking;
+  bool status;
 
 public:
+  checking_account(std::string name, bank &bank)
+      : account(name, bank), balance(0), status(false) {}
+
   void open_account() { this->status = true; }
 
   void close_account() { this->status = false; }
 
-  virtual void deposit(int amount) {
+  virtual void deposit(int amount) override {
     if (this->status != 1)
       throw "Account not opened!";
 
     this->balance += amount;
   }
 
-  virtual bool withdraw(int amount) {
+  virtual bool withdraw(int amount) override {
     if (this->status != 1)
       throw "Account in not opened!";
 
@@ -74,18 +70,20 @@ public:
     return false;
   }
 
-  ~checking_account() { this->status = false; }
+  ~checking_account() override { this->status = false; }
 };
 
-class savings_account : account {
+class savings_account : public account {
 private:
   int withdraw_limit = 1;
-  account_class class_type = savings;
 
 public:
+  savings_account(std::string name, bank &bank)
+      : account(name, bank), withdraw_limit(1) {}
+
   bool withdraw(int amount) {
     if (balance < amount || amount > withdraw_limit) {
-      return EXIT_FAILURE;
+      return true;
     }
 
     this->balance -= amount;
@@ -96,19 +94,23 @@ public:
   void set_withdraw_limit(int amount) { this->withdraw_limit = amount; }
 };
 
-class credit_account : account {
+class credit_account : public account {
 private:
   unsigned int credit_limit = 10000;
-  account_class _class_type = credit;
 
 public:
+  credit_account(std::string name, bank &bank)
+      : account(name, bank), credit_limit(10000) {}
+
+  using account::withdraw;
   bool withdraw(unsigned int amount) {
-    if (balance < amount && credit_limit == 0) {
+    if (static_cast<unsigned int>(balance) < amount && credit_limit == 0) {
       return EXIT_FAILURE;
-    } else if (balance < amount && credit_limit > amount) {
+    } else if (static_cast<unsigned int>(balance) < amount &&
+               credit_limit > amount) {
       amount -= credit_limit;
       return EXIT_SUCCESS;
-    } else if (balance > amount) {
+    } else if (balance > static_cast<int>(amount)) {
       amount -= balance;
       return EXIT_SUCCESS;
     }
@@ -116,7 +118,7 @@ public:
     return EXIT_FAILURE;
   }
 
-  void deposit(int amount) {
+  void deposit(int amount) override {
     if (this->credit_limit != 10000) {
       int deposit_amount = 0;
 
