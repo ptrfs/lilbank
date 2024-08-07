@@ -8,7 +8,8 @@
 
 // App startup function to check if there is ~/.local/lilbank/, if not, create
 // it
-bool create_lilbank(std::string home_name, std::optional<std::string> custom_dir) {
+bool create_lilbank(std::string home_name,
+                    std::optional<std::string> custom_dir) {
   std::string dir;
 
   if (custom_dir.has_value()) {
@@ -32,11 +33,13 @@ bool file_exists(std::string name) {
 }
 
 // Create a dayfile for a specific date
-bool create_day_file(std::string home_name, std::optional<std::string> custom_dir) {
+bool create_day_file(std::string home_name,
+                     std::optional<std::string> custom_dir) {
   std::string dir;
   create_lilbank(home_name, std::nullopt);
 
-  // Making the lilbank file (it would've already been made by this time but whatever)
+  // Making the lilbank file (it would've already been made by this time but
+  // whatever)
   if (custom_dir.has_value()) {
     dir = custom_dir.value();
   } else {
@@ -51,9 +54,9 @@ bool create_day_file(std::string home_name, std::optional<std::string> custom_di
   tm *ltm = localtime(&now);
 
   // Getting the name of the bankfile
-  std::string bankfile =
-      dir +
-      (std::string(std::to_string(ltm->tm_mday) + "-" + std::to_string(ltm->tm_mon)) + "-" + std::to_string(ltm->tm_year) + ".toml");
+  std::string bankfile = dir + (std::string(std::to_string(ltm->tm_mday) + "-" +
+                                            std::to_string(ltm->tm_mon)) +
+                                "-" + std::to_string(ltm->tm_year) + ".toml");
   if (file_exists(bankfile)) {
     return 0;
   }

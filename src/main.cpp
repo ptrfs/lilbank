@@ -1,6 +1,3 @@
-#include <iostream>
 #include "../lib/files.hpp"
 
-int main() {
-  return create_day_file("ptr", std::nullopt);
-}
+int main() { return create_day_file("ptr", std::nullopt); }
