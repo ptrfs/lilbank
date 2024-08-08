@@ -1,7 +1,6 @@
 lib_sources = [
   'account.hpp',
   'bank.hpp',
-  'toml.hpp',
   'files.cpp',
   'files.hpp',
   'account.cpp'
