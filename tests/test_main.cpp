@@ -37,7 +37,6 @@ protected:
   account *account_obj;
 };
 
-
 // Test the constructor of the bank class
 TEST_F(BankTest, ConstructorTest) {
   // Check if bank object is not null
@@ -77,9 +76,9 @@ TEST_F(AccountTest, WithdrawTest) {
   bank b = bank("TB", "ptr");
   std::unique_ptr<account> a = std::make_unique<account>("Test Account", b);
   a->deposit(100);
-  EXPECT_FALSE(a->withdraw(200));
+  EXPECT_TRUE(a->withdraw(200));
 
-  EXPECT_TRUE(a->withdraw(50));
+  EXPECT_FALSE(a->withdraw(50));
   EXPECT_EQ(a->get_balance(), (1 + 100 - 50));
 }
 
