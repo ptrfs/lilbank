@@ -29,14 +29,16 @@ struct abstract_account {
       : name(name), account_type(account_type), balance(balance) {}
 };
 
-struct abstract_action {
+/* A one-size-fits-all struct to show a specific payment that is available in
+ * the lilbank files */
+struct action {
   std::optional<id> get_id;
   std::optional<id> drain_id;
   int action_amt;
   action_type action_type;
 
-  abstract_action(std::optional<id> get_id, std::optional<id> drain_id,
-                  int action_amt, enum action_type action_type)
+  action(std::optional<id> get_id, std::optional<id> drain_id, int action_amt,
+         enum action_type action_type)
       : get_id(get_id), drain_id(drain_id), action_amt(action_amt),
         action_type(action_type) {}
 };
